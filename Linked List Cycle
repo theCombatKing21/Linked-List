@@ -1,0 +1,133 @@
+🧩 Problem: Linked List Cycle (LeetCode 141)
+
+Detect if a linked list has a cycle.
+
+🧠 1. How to START (Brute force thinking)
+💬 What you say
+
+“One straightforward way is to track visited nodes.”
+
+💡 Approach
+Traverse list
+Store each node in a HashSet
+If a node repeats → cycle exists
+⏱ Complexity
+Time: O(n)
+Space: O(n)
+❌ Drawback
+
+“Uses extra space — we can optimize this.”
+
+🚀 2. Optimization Insight (Key jump)
+💬 What you say
+
+“Instead of storing nodes, maybe I can detect a cycle using pointer movement.”
+
+Then lead into:
+
+“If there's a cycle, two pointers moving at different speeds will eventually meet.”
+
+👉 This transition is what interviewers LOVE.
+
+⚙️ 3. Optimal Approach (Floyd’s Cycle Detection)
+💡 Idea
+Use two pointers:
+slow → moves 1 step
+fast → moves 2 steps
+If cycle exists → they will meet
+If no cycle → fast reaches null
+🧠 Clean Explanation Flow
+
+“I’ll use two pointers.
+The slow pointer moves one step at a time, and the fast pointer moves two steps.
+If there’s a cycle, the fast pointer will eventually catch up with the slow pointer.
+If there’s no cycle, the fast pointer will reach the end.”
+
+✅ Code (clean version)
+public boolean hasCycle(ListNode head) {
+    if (head == null) return false;
+
+    ListNode slow = head;
+    ListNode fast = head;
+
+    while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+
+        if (slow == fast) return true;
+    }
+
+    return false;
+}
+⏱ Complexity
+Time: O(n)
+Space: O(1) ✅ (key improvement)
+👀 4. Visualization (IMPORTANT)
+Example with cycle:
+1 → 2 → 3 → 4 → 5
+          ↑     ↓
+          ← ← ←
+Movement:
+Step 1:
+slow = 2
+fast = 3
+
+Step 2:
+slow = 3
+fast = 5
+
+Step 3:
+slow = 4
+fast = 4  ← meet → cycle exists
+🧠 5. INTUITION (this is what makes it stick)
+
+Think of it like:
+
+🏃 Two runners on a circular track
+
+One slow, one fast
+Fast will eventually lap slow → they meet
+
+If no cycle:
+
+Fast runs off the track (null)
+
+🔁 6. Mental Model (for revision)
+
+“Slow = 1 step, Fast = 2 steps → if cycle, they meet.”
+
+🧱 7. Common Mistakes
+Forgetting fast.next != null check → NPE
+Comparing values instead of nodes (slow == fast, NOT slow.val)
+Starting fast incorrectly (should be same start or slight variation, both fine)
+🎯 8. How to SOUND like SDE-2
+
+Use phrases like:
+
+“This is Floyd’s Cycle Detection Algorithm”
+“We trade space for pointer-based detection”
+“Fast pointer guarantees convergence if cycle exists”
+“This is also called tortoise and hare approach”
+🔥 9. Follow-up (VERY COMMON)
+
+After detecting cycle, interviewer may ask:
+
+👉 “Find where the cycle starts” (LeetCode 142)
+
+If you want, 
+I’ll break that down — it’s a must-know SDE-2 concept and builds directly on this.
+
+📝 Short Notes Version (for Word)
+Brute:
+- HashSet → detect repeat
+- O(n) space
+
+Optimal:
+- Slow (1), Fast (2)
+- If meet → cycle
+
+Time: O(n)
+Space: O(1)
+
+Mental model:
+Fast laps slow in cycle
